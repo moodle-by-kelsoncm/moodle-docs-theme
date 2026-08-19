@@ -1,0 +1,9 @@
+{# Searchbox component for moodle_docs_theme #}
+<div class="moodle-searchbox" role="search">
+  <div class="moodle-sidebar-section-title">Buscar</div>
+  <form action="{{ pathto('search') }}" method="get">
+    <input type="text" name="q" placeholder="Buscar na documentação..." aria-label="Buscar na documentação" required />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>

@@ -1,0 +1,170 @@
+/*
+ * moodle_docs_theme - Variáveis CSS Oficiais
+ * Inspirado fielmente na paleta de cores e tipografia do docs.moodle.org (MoodleDocs)
+ */
+
+/* Importação da fonte Open Sans do Google Fonts (usada nos títulos do docs.moodle.org) */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* Cores Principais do MoodleDocs (Oficiais) */
+  --moodle-primary: #6c336d;          /* Roxo dos títulos de seção */
+  --moodle-accent: #f98012;           /* Laranja Moodle (aba ativa, destaques) */
+  --moodle-dark-purple: #4a2350;      /* Variante escura do roxo, usada no footer */
+  --moodle-accent-soft: #f5f5f5;      /* Fundo claro da barra secundária */
+
+  /* Texto e Tipografia */
+  --moodle-text: #212121;             /* Cor do texto principal */
+  --moodle-text-muted: #5f6368;       /* Cor de metadados / subtítulos */
+  --moodle-bg: #ffffff;               /* Fundo principal da página */
+  --moodle-sidebar-bg: #fafafa;       /* Fundo do menu lateral */
+  --moodle-border: #ced4da;           /* Divisores e bordas */
+
+  /* Código e Sintaxe */
+  --moodle-code-bg: #f8f9fa;          /* Fundo dos blocos de código */
+  --moodle-code-text: #24292e;        /* Cor do texto em código */
+  --moodle-code-border: #e1e4e8;      /* Borda dos blocos de código */
+  --moodle-inline-code-bg: #f3e8f3;   /* Fundo de código inline (roxo suave) */
+  --moodle-inline-code-text: #6c336d; /* Texto de código inline */
+
+  /* Links */
+  --moodle-link: #3366cc;             /* Cor padrão dos links (azul MoodleDocs) */
+  --moodle-link-hover: #1a4fb4;       /* Cor dos links no hover */
+  --moodle-nav-text: #355a83;         /* Cor dos links de navegação (navy) */
+
+  /* Header, Banner e Footer */
+  --moodle-header-bg: #ffffff;        /* Cabeçalho principal (claro, estilo wiki) */
+  --moodle-header-text: #212121;
+  --moodle-header-border: #f98012;    /* Faixa laranja inferior do cabeçalho */
+  --moodle-sub-header-bg: #f5f5f5;    /* Barra secundária de contexto */
+  --moodle-sub-header-text: #355a83;
+  --moodle-footer-bg: #355a83;        /* Rodapé navy */
+  --moodle-footer-text: #ffffff;
+  --moodle-search-btn-bg: #e9ecef;
+  --moodle-search-btn-text: #355a83;
+
+  /* Admonitions / Callouts (Estilo MoodleDocs) */
+  --admonition-note-bg: #f3e8f3;
+  --admonition-note-border: #6c336d;
+  --admonition-note-text: #4a2350;
+
+  --admonition-warning-bg: #fff4e5;
+  --admonition-warning-border: #f98012;
+  --admonition-warning-text: #93450a;
+
+  --admonition-danger-bg: #fef2f2;
+  --admonition-danger-border: #ef4444;
+  --admonition-danger-text: #991b1b;
+
+  --admonition-tip-bg: #eaf1fb;
+  --admonition-tip-border: #3366cc;
+  --admonition-tip-text: #1a3d8f;
+
+  /* Fontes Oficiais */
+  --font-sans: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+/* Modo Escuro (Dark Mode) - Usando alta especificidade html[data-theme="dark"] para se sobrepor a :root inline */
+html[data-theme="dark"] {
+  --moodle-primary: #c98bcb;
+  --moodle-accent: #ff9d3f;
+  --moodle-dark-purple: #2a1330;
+  --moodle-accent-soft: #1e1b23;
+
+  --moodle-text: #e2e8f0;
+  --moodle-text-muted: #94a3b8;
+  --moodle-bg: #14121a;
+  --moodle-sidebar-bg: #1e1b23;
+  --moodle-border: #33303c;
+
+  --moodle-code-bg: #1e1b23;
+  --moodle-code-text: #f8fafc;
+  --moodle-code-border: #33303c;
+  --moodle-inline-code-bg: #3a1f3d;
+  --moodle-inline-code-text: #e2a6e3;
+
+  --moodle-link: #7fa8ff;
+  --moodle-link-hover: #a9c4ff;
+  --moodle-nav-text: #9db8d8;
+
+  --moodle-header-bg: #1a1720;
+  --moodle-header-text: #f1f5f9;
+  --moodle-header-border: #ff9d3f;
+  --moodle-sub-header-bg: #1e1b23;
+  --moodle-sub-header-text: #9db8d8;
+  --moodle-footer-bg: #14212f;
+  --moodle-footer-text: #cbd5e1;
+  --moodle-search-btn-bg: #292530;
+  --moodle-search-btn-text: #9db8d8;
+
+  --admonition-note-bg: #3a1f3d;
+  --admonition-note-border: #c98bcb;
+  --admonition-note-text: #fbe8fc;
+
+  --admonition-warning-bg: #452a06;
+  --admonition-warning-border: #ff9d3f;
+  --admonition-warning-text: #fff2e2;
+
+  --admonition-danger-bg: #450a0a;
+  --admonition-danger-border: #f87171;
+  --admonition-danger-text: #fef2f2;
+
+  --admonition-tip-bg: #10233f;
+  --admonition-tip-border: #7fa8ff;
+  --admonition-tip-text: #e6edff;
+}
+
+/* Estilos de realce de código Pygments para Dark Mode */
+html[data-theme="dark"] div.highlight {
+  background-color: #1e1b23 !important;
+  color: #f8fafc !important;
+  border-color: #33303c !important;
+}
+
+html[data-theme="dark"] div.highlight pre {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .highlight .k,
+html[data-theme="dark"] .highlight .kn,
+html[data-theme="dark"] .highlight .kp,
+html[data-theme="dark"] .highlight .kr,
+html[data-theme="dark"] .highlight .kd { color: #f472b6 !important; font-weight: bold; } /* Keywords */
+
+html[data-theme="dark"] .highlight .s,
+html[data-theme="dark"] .highlight .sa,
+html[data-theme="dark"] .highlight .sb,
+html[data-theme="dark"] .highlight .sc,
+html[data-theme="dark"] .highlight .dl,
+html[data-theme="dark"] .highlight .sd,
+html[data-theme="dark"] .highlight .s2,
+html[data-theme="dark"] .highlight .se,
+html[data-theme="dark"] .highlight .sh,
+html[data-theme="dark"] .highlight .si,
+html[data-theme="dark"] .highlight .sx,
+html[data-theme="dark"] .highlight .sr,
+html[data-theme="dark"] .highlight .s1,
+html[data-theme="dark"] .highlight .ss { color: #34d399 !important; } /* Strings */
+
+html[data-theme="dark"] .highlight .c,
+html[data-theme="dark"] .highlight .ch,
+html[data-theme="dark"] .highlight .cm,
+html[data-theme="dark"] .highlight .cp,
+html[data-theme="dark"] .highlight .cpf,
+html[data-theme="dark"] .highlight .c1,
+html[data-theme="dark"] .highlight .cs { color: #94a3b8 !important; font-style: italic; } /* Comments */
+
+html[data-theme="dark"] .highlight .nf,
+html[data-theme="dark"] .highlight .fm { color: #7fa8ff !important; } /* Functions */
+
+html[data-theme="dark"] .highlight .nn,
+html[data-theme="dark"] .highlight .nc { color: #ff9d3f !important; } /* Classes/Modules */
+
+html[data-theme="dark"] .highlight .m,
+html[data-theme="dark"] .highlight .mb,
+html[data-theme="dark"] .highlight .mf,
+html[data-theme="dark"] .highlight .mh,
+html[data-theme="dark"] .highlight .mi,
+html[data-theme="dark"] .highlight .il,
+html[data-theme="dark"] .highlight .mo { color: #c98bcb !important; } /* Numbers */

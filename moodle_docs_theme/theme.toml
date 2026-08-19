@@ -1,0 +1,31 @@
+[theme]
+name = "moodle_docs_theme"
+inherit = "basic"
+sidebars = ["searchbox.html", "globaltoc.html", "relations.html", "sourcelink.html"]
+
+[theme.pygments_style]
+default = "default"
+
+[options]
+primary_color = "#6c336d"
+secondary_color = "#f98012"
+accent_color = "#f5f5f5"
+text_color = "#212121"
+bg_color = "#ffffff"
+code_bg_color = "#f8f9fa"
+link_color = "#3366cc"
+link_hover_color = "#1a4fb4"
+sidebar_bg = "#fafafa"
+nav_text_color = "#355a83"
+logo = ""
+logo_height = "32px"
+project_name = ""
+tagline = "Documentação inspirada no MoodleDocs"
+github_url = ""
+github_repo = ""
+github_version = "main"
+doc_path = "docs/"
+navigation_links = ""
+show_edit_on_github = true
+enable_dark_mode = true
+footer_custom_text = ""

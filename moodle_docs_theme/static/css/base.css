@@ -1,0 +1,819 @@
+@import url("colors.css");
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--moodle-text);
+  background-color: var(--moodle-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--moodle-link);
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, text-decoration 0.15s ease-in-out;
+}
+
+a:hover, a:focus {
+  color: var(--moodle-link-hover);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   Page Layout Structure
+   ========================================================================== */
+
+.moodle-site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 1. Header (Estilo MoodleDocs: fundo claro, faixa laranja inferior) */
+.moodle-header {
+  background-color: var(--moodle-header-bg);
+  color: var(--moodle-header-text);
+  border-bottom: 3px solid var(--moodle-header-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.moodle-header-inner {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0.85rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.moodle-brand-group {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.moodle-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none !important;
+  color: var(--moodle-header-text);
+}
+
+.moodle-brand-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.moodle-brand-title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--moodle-header-text);
+  font-family: var(--font-sans);
+}
+
+.moodle-tagline {
+  font-size: 0.85rem;
+  color: var(--moodle-text-muted);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.moodle-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.moodle-header-search {
+  display: flex;
+  align-items: center;
+  background-color: var(--moodle-bg);
+  border: 1px solid var(--moodle-border);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.moodle-header-search:focus-within {
+  border-color: var(--moodle-primary);
+  box-shadow: 0 0 0 3px rgba(108, 51, 109, 0.15);
+}
+
+.moodle-header-search input[type="text"],
+.moodle-header-search input[type="search"] {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--moodle-text);
+  font-size: 0.85rem;
+  padding: 0.25rem 0.4rem;
+  width: 180px;
+}
+
+.moodle-header-search input::placeholder {
+  color: var(--moodle-text-muted);
+}
+
+.moodle-header-search button {
+  background: var(--moodle-search-btn-bg);
+  border: none;
+  border-radius: 4px;
+  color: var(--moodle-search-btn-text);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  background: var(--moodle-search-btn-bg);
+  border: 1px solid var(--moodle-border);
+  color: var(--moodle-search-btn-text);
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--moodle-accent-soft);
+  border-color: var(--moodle-primary);
+}
+
+/* 2. Sub-Header Banner (Estilo barra de contexto do MoodleDocs) */
+.moodle-sub-header {
+  background-color: var(--moodle-sub-header-bg);
+  color: var(--moodle-sub-header-text);
+  padding: 0;
+  border-bottom: 1px solid var(--moodle-border);
+}
+
+.moodle-sub-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.5rem 3rem;
+}
+
+.moodle-sub-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--moodle-sub-header-text);
+}
+
+.moodle-version-badge {
+  background-color: var(--moodle-primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+}
+
+.moodle-sub-header-link {
+  color: var(--moodle-sub-header-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* 3. Breadcrumbs Bar */
+.moodle-breadcrumbs-bar {
+  background-color: var(--moodle-accent-soft);
+  border-bottom: 1px solid var(--moodle-border);
+  padding: 0.5rem 1.5rem;
+}
+
+.moodle-breadcrumbs-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.moodle-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--moodle-text-muted);
+}
+
+.moodle-breadcrumbs li::after {
+  content: "›";
+  margin-left: 0.4rem;
+  color: var(--moodle-text-muted);
+  font-weight: 700;
+}
+
+.moodle-breadcrumbs li:last-child::after {
+  content: "";
+}
+
+.moodle-breadcrumbs a {
+  color: var(--moodle-link);
+  font-weight: 500;
+}
+
+.edit-on-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--moodle-text-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--moodle-border);
+  background-color: var(--moodle-bg);
+  transition: all 0.15s ease;
+}
+
+.edit-on-github-link:hover {
+  color: var(--moodle-link);
+  border-color: var(--moodle-primary);
+  background-color: var(--moodle-accent-soft);
+  text-decoration: none;
+}
+
+/* 4. Main Container Layout (Content LEFT, Sidebar RIGHT - Estilo MoodleDocs) */
+.moodle-main-container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex: 1;
+  padding: 0 3em;
+}
+
+/* Main Content Article (Left Side) */
+.moodle-content {
+  flex: 1;
+  overflow-x: auto;
+  order: 1; /* Content comes first (LEFT) */
+  padding: 1.35rem 1.15rem;
+}
+
+/* Sidebar Navigation (RIGHT Side - Estilo MoodleDocs) */
+.moodle-sidebar {
+  width: 30%;
+  min-width: 280px;
+  background-color: var(--moodle-sidebar-bg);
+  border-left: 1px solid var(--moodle-border); /* Border on LEFT since sidebar is on RIGHT */
+  border-right: none;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  order: 2; /* Sidebar comes second (RIGHT) */
+}
+
+.moodle-searchbox {
+  margin-bottom: 0.5rem;
+}
+
+.moodle-searchbox form {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.moodle-searchbox input[type="text"],
+.moodle-searchbox input[type="search"] {
+  width: 100%;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--moodle-border);
+  border-radius: 4px;
+  background-color: var(--moodle-bg);
+  color: var(--moodle-text);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.moodle-searchbox input:focus {
+  border-color: var(--moodle-primary);
+  box-shadow: 0 0 0 3px rgba(108, 51, 109, 0.15);
+}
+
+.moodle-searchbox button {
+  padding: 0.45rem 0.75rem;
+  background-color: var(--moodle-search-btn-bg);
+  color: var(--moodle-search-btn-text);
+  border: 1px solid var(--moodle-border);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.moodle-searchbox button:hover {
+  background-color: var(--moodle-accent-soft);
+}
+
+/* Sidebar Navigation Tree */
+.moodle-sidebar nav ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.moodle-sidebar nav ul ul {
+  padding-left: 0.85rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.moodle-sidebar nav li {
+  margin-bottom: 0.25rem;
+}
+
+.moodle-sidebar nav a {
+  display: block;
+  padding: 0.35rem 0.6rem;
+  color: var(--moodle-link);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  transition: all 0.15s ease;
+}
+
+.moodle-sidebar nav a:hover {
+  background-color: rgba(51, 102, 204, 0.1);
+  color: var(--moodle-link-hover);
+  text-decoration: none;
+}
+
+.moodle-sidebar nav li.current > a,
+.moodle-sidebar nav a.current {
+  font-weight: 700;
+  color: var(--moodle-primary);
+  background-color: rgba(108, 51, 109, 0.08);
+  border-left: 3.5px solid var(--moodle-accent);
+  padding-left: 0.45rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.moodle-sidebar-section-title {
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--moodle-primary);
+  margin-top: 0.75rem;
+  margin-bottom: 0.4rem;
+  padding-left: 0.4rem;
+  border-bottom: 1px solid var(--moodle-border);
+  padding-bottom: 0.25rem;
+}
+
+/* ==========================================================================
+   Typography & Sphinx Article Elements
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--moodle-primary);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 1.85rem;
+  margin-bottom: 0.85rem;
+}
+
+h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--moodle-text);
+  border-bottom: 1px solid var(--moodle-border);
+  padding-bottom: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+h2 {
+  font-size: 1.55rem;
+  border-bottom: 1px solid var(--moodle-border);
+  padding-bottom: 0.35rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+h4 {
+  font-size: 1.1rem;
+}
+
+/* Header link / Permalinks */
+.headerlink {
+  font-size: 0.8em;
+  color: var(--moodle-accent);
+  padding-left: 0.35rem;
+  text-decoration: none !important;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+h1:hover .headerlink,
+h2:hover .headerlink,
+h3:hover .headerlink,
+h4:hover .headerlink,
+h5:hover .headerlink,
+h6:hover .headerlink,
+dt:hover .headerlink {
+  visibility: visible;
+  opacity: 1;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1.15rem;
+}
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 1.15rem;
+  padding-left: 1.6rem;
+}
+
+li {
+  margin-bottom: 0.3rem;
+}
+
+blockquote {
+  margin: 1.35rem 0;
+  padding: 0.75rem 1.2rem;
+  border-left: 4px solid var(--moodle-accent);
+  background-color: var(--moodle-accent-soft);
+  color: var(--moodle-text);
+  font-style: italic;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Inline & Block Code */
+code, kbd, pre, samp {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+code.literal, p code, li code, td code {
+  background-color: var(--moodle-inline-code-bg);
+  color: var(--moodle-inline-code-text);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid var(--moodle-code-border);
+  font-weight: 500;
+}
+
+div.highlight, pre {
+  background-color: var(--moodle-code-bg);
+  color: var(--moodle-code-text);
+  border: 1px solid var(--moodle-code-border);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  line-height: 1.45;
+}
+
+pre {
+  margin: 0;
+}
+
+/* Copy Button for Code Blocks */
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: var(--moodle-bg);
+  border: 1px solid var(--moodle-border);
+  color: var(--moodle-text-muted);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  opacity: 1;
+  color: var(--moodle-primary);
+  border-color: var(--moodle-accent);
+  background-color: var(--moodle-accent-soft);
+}
+
+.copy-btn.copied {
+  background-color: var(--moodle-accent);
+  color: #ffffff;
+  border-color: var(--moodle-accent);
+}
+
+/* ==========================================================================
+   Sphinx Admonitions (Estilo MoodleDocs)
+   ========================================================================== */
+
+.admonition {
+  margin: 1.35rem 0;
+  padding: 1rem 1.2rem;
+  border-radius: 4px;
+  border-left: 4px solid var(--moodle-primary);
+  background-color: var(--admonition-note-bg);
+  color: var(--moodle-text);
+}
+
+.admonition .admonition-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.admonition.note {
+  border-left-color: var(--admonition-note-border);
+  background-color: var(--admonition-note-bg);
+}
+.admonition.note .admonition-title {
+  color: var(--admonition-note-text);
+}
+
+.admonition.warning, .admonition.caution {
+  border-left-color: var(--admonition-warning-border);
+  background-color: var(--admonition-warning-bg);
+}
+.admonition.warning .admonition-title, .admonition.caution .admonition-title {
+  color: var(--admonition-warning-text);
+}
+
+.admonition.danger, .admonition.error {
+  border-left-color: var(--admonition-danger-border);
+  background-color: var(--admonition-danger-bg);
+}
+.admonition.danger .admonition-title, .admonition.error .admonition-title {
+  color: var(--admonition-danger-text);
+}
+
+.admonition.tip, .admonition.important, .admonition.seealso {
+  border-left-color: var(--admonition-tip-border);
+  background-color: var(--admonition-tip-bg);
+}
+.admonition.tip .admonition-title, .admonition.important .admonition-title, .admonition.seealso .admonition-title {
+  color: var(--admonition-tip-text);
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+table.docutils {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+}
+
+table.docutils th, table.docutils td {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--moodle-border);
+  text-align: left;
+}
+
+table.docutils th {
+  background-color: var(--moodle-primary);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+table.docutils tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] table.docutils tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ==========================================================================
+   Footer (Estilo MoodleDocs: rodapé navy com faixa laranja superior)
+   ========================================================================== */
+
+.moodle-footer {
+  background-color: var(--moodle-footer-bg);
+  color: var(--moodle-footer-text);
+  border-top: 4px solid var(--moodle-accent);
+  padding: 2rem 1.5rem;
+  margin-top: auto;
+}
+
+.moodle-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.moodle-footer a {
+  color: #ffffff;
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+.moodle-footer a:hover {
+  opacity: 1;
+}
+
+.related {
+  display: none;
+}
+/* ==========================================================================
+   Responsive / Mobile Styles
+   ========================================================================== */
+
+/* Universal Fluid Media & Overflow Safeguards */
+.moodle-content img,
+.moodle-content iframe,
+.moodle-content video {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+  box-sizing: border-box;
+}
+
+.moodle-content table,
+table.docutils {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.moodle-content pre,
+div.highlight pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  word-wrap: normal;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .moodle-header-inner {
+    padding: 0.75rem 1.5rem;
+  }
+  .moodle-sub-header-inner {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  .moodle-main-container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .moodle-header-inner {
+    padding: 0.6rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .moodle-tagline {
+    display: none;
+  }
+
+  .moodle-header-tools {
+    gap: 0.5rem;
+  }
+
+  .moodle-header-search input[type="text"],
+  .moodle-header-search input[type="search"] {
+    width: 130px;
+  }
+
+  .moodle-sub-header-inner {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .moodle-main-container {
+    flex-direction: column;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .moodle-content {
+    order: 1;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 1.25rem 1rem;
+  }
+
+  .moodle-sidebar {
+    order: 2;
+    width: 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+    border-left: none;
+    border-top: 2px solid var(--moodle-border);
+    padding: 1.25rem 1rem;
+  }
+
+  .moodle-footer {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .moodle-header-inner {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .moodle-brand-title {
+    font-size: 1.35rem;
+  }
+
+  .moodle-header-search input[type="text"],
+  .moodle-header-search input[type="search"] {
+    width: 95px;
+    font-size: 0.8rem;
+  }
+
+  .moodle-header-search input:focus {
+    width: 120px;
+  }
+
+  .moodle-sub-header-inner {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .moodle-content {
+    padding: 1rem 0.75rem;
+  }
+
+  .moodle-content h1 {
+    font-size: 1.65rem;
+  }
+
+  .moodle-content h2 {
+    font-size: 1.35rem;
+  }
+
+  .moodle-content h3 {
+    font-size: 1.15rem;
+  }
+}

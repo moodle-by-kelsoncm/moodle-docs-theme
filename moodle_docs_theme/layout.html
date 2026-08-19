@@ -1,0 +1,179 @@
+{% extends "basic/layout.html" %}
+
+{% block doctype %}
+<!DOCTYPE html>
+{% endblock %}
+
+{% block htmltag %}
+<html lang="{{ language if language else 'pt-BR' }}">
+{% endblock %}
+
+{% block extrahead %}
+  {{ super() }}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {# Script inline de inicialização instantânea do Dark Mode (Evita FOUC) #}
+  <script>
+    (function() {
+      try {
+        var storedTheme = localStorage.getItem('moodle-theme');
+        var systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = storedTheme || (systemPrefersDark ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  {# Carregamento da fonte Open Sans via Google Fonts (mesma família usada no docs.moodle.org) #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  {# Dynamic CSS Variable overrides from theme_options #}
+  <style>
+    :root {
+      {% if theme_primary_color %}--moodle-primary: {{ theme_primary_color }};{% endif %}
+      {% if theme_secondary_color %}--moodle-accent: {{ theme_secondary_color }}; --moodle-header-border: {{ theme_secondary_color }};{% endif %}
+      {% if theme_accent_color %}--moodle-sub-header-bg: {{ theme_accent_color }};{% endif %}
+      {% if theme_text_color %}--moodle-text: {{ theme_text_color }};{% endif %}
+      {% if theme_bg_color %}--moodle-bg: {{ theme_bg_color }};{% endif %}
+      {% if theme_code_bg_color %}--moodle-code-bg: {{ theme_code_bg_color }};{% endif %}
+      {% if theme_link_color %}--moodle-link: {{ theme_link_color }};{% endif %}
+      {% if theme_link_hover_color %}--moodle-link-hover: {{ theme_link_hover_color }};{% endif %}
+      {% if theme_sidebar_bg %}--moodle-sidebar-bg: {{ theme_sidebar_bg }};{% endif %}
+      {% if theme_nav_text_color %}--moodle-nav-text: {{ theme_nav_text_color }};{% endif %}
+    }
+  </style>
+{% endblock %}
+
+{% block header %}
+<div class="moodle-site-wrapper">
+  {# 1. Top Header Bar (Estilo MoodleDocs: fundo claro, marca à esquerda, faixa laranja inferior) #}
+  <header class="moodle-header">
+    <div class="moodle-header-inner">
+      {# Brand Logo & Name #}
+      <div class="moodle-brand-group">
+        <a href="{{ pathto(master_doc) }}" class="moodle-brand">
+          {% if theme_logo %}
+            <img src="{{ pathto('_static/' ~ theme_logo, 1) }}" alt="{{ project }}" class="moodle-brand-logo" style="{% if theme_logo_height %}height: {{ theme_logo_height }};{% endif %}" />
+          {% elif logo_url %}
+            <img src="{{ logo_url }}" alt="{{ project }}" class="moodle-brand-logo" />
+          {% elif logo %}
+            <img src="{{ pathto('_static/' ~ logo, 1) }}" alt="{{ project }}" class="moodle-brand-logo" />
+          {% else %}
+            <span class="moodle-brand-title">
+              {% if theme_project_name %}{{ theme_project_name }}{% else %}{{ project }}{% endif %}
+            </span>
+          {% endif %}
+        </a>
+        <span class="moodle-tagline">
+          {% if theme_tagline %}{{ theme_tagline }}{% else %}Documentação inspirada no MoodleDocs{% endif %}
+        </span>
+      </div>
+
+      {# Right-side tools: Header Search & Dark Mode Toggle #}
+      <div class="moodle-header-tools">
+        <form action="{{ pathto('search') }}" method="get" class="moodle-header-search">
+          <input type="text" name="q" placeholder="Buscar..." aria-label="Buscar na documentação" required />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+          <button type="submit" title="Buscar">🔍</button>
+        </form>
+
+        {% if theme_enable_dark_mode|tobool %}
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar modo claro/escuro" title="Alternar modo claro/escuro">
+            <span id="theme-toggle-icon">🌙</span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  {# 2. Sub-Header Banner Strip (Estilo barra de contexto do MoodleDocs) #}
+  <section class="moodle-sub-header">
+    <div class="moodle-sub-header-inner">
+      <div class="moodle-sub-header-title">
+        <span>Documentação</span>
+        {% if release %}
+          <span class="moodle-version-badge">v{{ release }}</span>
+        {% endif %}
+      </div>
+      <div>
+        {% if theme_github_url %}
+          <a href="{{ theme_github_url }}" class="moodle-sub-header-link" target="_blank" rel="noopener noreferrer">Repositório no GitHub ↗</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block content %}
+  {# 3. Main Layout Container (Artigo na ESQUERDA, Navegação na DIREITA, como no docs.moodle.org) #}
+  <div class="moodle-main-container">
+    {# Main Article Content (Esquerda) #}
+    <main class="moodle-content" role="main">
+      {% block body %}{% endblock %}
+    </main>
+
+    {# Sidebar Navegação (DIREITA - Estilo MoodleDocs) #}
+    {% block sidebar1 %}
+      <aside class="moodle-sidebar" id="moodle-sidebar" role="navigation" aria-label="Navegação Principal">
+        {% if theme_navigation_links %}
+          <div class="moodle-sidebar-section-title">Seções &amp; Links</div>
+          <nav>
+            <ul>
+              {% if theme_navigation_links is string %}
+                {% for item in theme_navigation_links.split(',') %}
+                  {% set parts = item.strip().split('|') %}
+                  {% set title = parts[0].strip() %}
+                  {% set target = parts[1].strip() if parts|length > 1 else master_doc %}
+                  <li class="{% if pagename in target or (target == master_doc and pagename == master_doc) %}current{% endif %}">
+                    {% if target.startswith('http://') or target.startswith('https://') %}
+                      <a href="{{ target }}" target="_blank" rel="noopener noreferrer">{{ title }} ↗</a>
+                    {% else %}
+                      {% set clean_target = target[:-5] if target.endswith('.html') else target %}
+                      <a href="{{ pathto(clean_target) }}" class="{% if pagename == clean_target %}current{% endif %}">{{ title }}</a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              {% endif %}
+            </ul>
+          </nav>
+        {% endif %}
+      </aside>
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {# Footer #}
+  <footer class="moodle-footer" role="contentinfo">
+    <div class="moodle-footer-inner">
+      <div>
+        {% if copyright %}
+          &copy; {{ copyright }}.
+        {% else %}
+          &copy; {{ last_updated_year if last_updated_year else '' }} {{ project }}.
+        {% endif %}
+        {% if theme_footer_custom_text %}
+          {{ theme_footer_custom_text }}
+        {% endif %}
+      </div>
+      <div>
+        Desenvolvido com inspiração na documentação oficial do
+        <a href="https://docs.moodle.org/" target="_blank" rel="noopener noreferrer">MoodleDocs</a> &amp;
+        <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener noreferrer">Sphinx</a>.
+      </div>
+      {% if theme_github_url %}
+        <div>
+          <a href="{{ theme_github_url }}" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a>
+        </div>
+      {% endif %}
+    </div>
+  </footer>
+</div> {# End site wrapper #}
+{% endblock %}
