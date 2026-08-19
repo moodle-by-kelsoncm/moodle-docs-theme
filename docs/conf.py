@@ -5,7 +5,7 @@ copyright = "2026, Contribuições de KelsonCM à comunidade Moodle"
 author = "KelsonCM"
 release = moodle_docs_theme.__version__
 
-extensions = ["sphinx.ext.githubpages"]
+extensions = ["sphinx.ext.githubpages", "moodle_docs_theme"]
 
 templates_path = []
 exclude_patterns = ["_build"]
