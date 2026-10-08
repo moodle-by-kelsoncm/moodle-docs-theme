@@ -10,7 +10,7 @@ da sua organização.
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Sphinx](https://img.shields.io/badge/sphinx-4.0%2B-green)
-![CI & Docs](https://github.com/moodle-by-kelsoncm/moodle-docs-theme/actions/workflows/ci.yml/badge.svg)
+![CI & Docs](https://github.com/moodle-by-kelsoncm/moodle-docs-theme/actions/workflows/publish-pypi.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-blue)
 
 ---
@@ -131,7 +131,7 @@ python build_docs.py
 moodle-docs-theme/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml             # Integração contínua, docs (Pages) e publicação (PyPI)
+│       └── publish-pypi.yml   # Integração contínua, docs (Pages) e publicação (PyPI)
 ├── docs/                      # Documentação oficial do tema
 │   ├── conf.py
 │   ├── index.rst
