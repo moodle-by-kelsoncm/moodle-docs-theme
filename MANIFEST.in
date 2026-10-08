@@ -4,3 +4,4 @@ include moodle_docs_theme/theme.conf
 include moodle_docs_theme/theme.toml
 include moodle_docs_theme/*.html
 recursive-include moodle_docs_theme/static *
+recursive-include moodle_docs_theme/template *

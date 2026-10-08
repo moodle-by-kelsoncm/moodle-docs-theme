@@ -15,6 +15,7 @@ Esta é a própria documentação do tema, construída com o tema que ela docume
 
    installation
    configuration
+   template
 
 Por que este tema existe
 -------------------------

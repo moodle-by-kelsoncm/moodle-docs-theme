@@ -6,22 +6,36 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="moodle-docs-theme",
-    version="0.1.0",
+    version="0.2.0",
     author="KelsonCM",
     author_email="kelsoncm@gmail.com",
     description="Um tema Sphinx reutilizável inspirado visualmente na documentação oficial do Moodle (docs.moodle.org)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/moodle-by-kelsoncm/moodle-docs-theme",
+    install_requires=[
+        "sphinx>=4.0",
+        "myst-parser>=2.0",
+    ],
+    extras_require={
+        "dev": [
+            "pytest>=7.0",
+            "pytest-cov",
+        ],
+    },
     packages=find_namespace_packages(include=["moodle_docs_theme*"]),
     include_package_data=True,
     package_data={
         "moodle_docs_theme": [
             "*.html", "theme.conf", "theme.toml",
             "static/css/*.css", "static/js/*.js",
+            "template/docs/*", "template/workflows/*",
         ],
     },
     entry_points={
+        "console_scripts": [
+            "moodle-docs-theme = moodle_docs_theme.cli:main",
+        ],
         "sphinx.html_themes": [
             "moodle_docs_theme = moodle_docs_theme",
         ],
