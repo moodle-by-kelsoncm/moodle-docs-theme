@@ -96,6 +96,35 @@ para a lista completa de opções.
 
 ---
 
+## Template de documentação para repositórios
+
+O `moodle-docs-theme` inclui um template completo e padronizado para estruturar a documentação de qualquer repositório ou plugin Moodle da organização:
+
+### Inicialização via CLI
+
+```bash
+# No diretório raiz do plugin
+moodle-docs-theme init
+```
+
+O comando detecta o tipo de plugin, configura o `docs/conf.py` (com suporte a Markdown nativo via `myst-parser`), cria as páginas modelo (`index.md`, `installation.md`, `configuration.md`, `usage.md`), `docs/requirements.txt` e o workflow do GitHub Actions em `.github/workflows/docs.yml`.
+
+### Compilando a documentação
+
+Para compilar a documentação do projeto atual:
+
+```bash
+moodle-docs-theme build
+```
+
+Ou para compilar a documentação do próprio tema:
+
+```bash
+python build_docs.py
+```
+
+---
+
 ## Estrutura do repositório
 
 ```
@@ -108,7 +137,8 @@ moodle-docs-theme/
 │   ├── conf.py
 │   ├── index.rst
 │   ├── installation.rst
-│   └── configuration.rst
+│   ├── configuration.rst
+│   └── template.rst           # Guia de uso do template
 ├── moodle_docs_theme/         # Código fonte do tema Sphinx
 │   ├── static/
 │   │   ├── css/
@@ -116,6 +146,11 @@ moodle-docs-theme/
 │   │   │   └── colors.css
 │   │   └── js/
 │   │       └── theme.js
+│   ├── template/              # Arquivos modelo do template de documentação
+│   │   ├── docs/
+│   │   └── workflows/
+│   ├── cli.py                 # CLI moodle-docs-theme (init, build)
+│   ├── __main__.py
 │   ├── layout.html
 │   ├── page.html
 │   ├── searchbox.html
@@ -123,6 +158,9 @@ moodle-docs-theme/
 │   ├── theme.conf
 │   ├── theme.toml
 │   └── __init__.py
+├── template/                  # Template de documentação exposto na raiz
+├── tests/                     # Testes automatizados (pytest)
+├── build_docs.py              # Script para gerar a própria documentação
 ├── setup.py
 ├── pyproject.toml
 ├── MANIFEST.in
@@ -136,8 +174,9 @@ moodle-docs-theme/
 
 ```bash
 pip install -e .
-sphinx-build -b html docs docs/_build/html
+python build_docs.py --clean
 ```
+
 
 ---
 

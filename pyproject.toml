@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "moodle-docs-theme"
-version = "0.1.0"
+version = "0.2.0"
 description = "Um tema Sphinx reutilizável inspirado visualmente na documentação oficial do Moodle (docs.moodle.org)"
 readme = "README.md"
 authors = [
@@ -13,7 +13,8 @@ authors = [
 license = "BSD-3-Clause"
 requires-python = ">=3.8"
 dependencies = [
-    "sphinx>=4.0"
+    "sphinx>=4.0",
+    "myst-parser>=2.0"
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -31,9 +32,18 @@ classifiers = [
     "Topic :: Software Development :: Documentation"
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov"
+]
+
 [project.urls]
 Homepage = "https://github.com/moodle-by-kelsoncm/moodle-docs-theme"
 Repository = "https://github.com/moodle-by-kelsoncm/moodle-docs-theme"
+
+[project.scripts]
+moodle-docs-theme = "moodle_docs_theme.cli:main"
 
 [project.entry-points."sphinx.html_themes"]
 moodle_docs_theme = "moodle_docs_theme"
@@ -49,4 +59,6 @@ moodle_docs_theme = [
     "theme.toml",
     "static/css/*.css",
     "static/js/*.js",
+    "template/docs/*",
+    "template/workflows/*",
 ]

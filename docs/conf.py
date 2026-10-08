@@ -26,7 +26,7 @@ html_theme_options = {
     "doc_path": "docs/",
     "show_edit_on_github": True,
     "enable_dark_mode": True,
-    "navigation_links": "Início|index, Instalação|installation, Configuração|configuration",
+    "navigation_links": "Início|index, Instalação|installation, Configuração|configuration, Template|template",
 }
 
 html_static_path = []
