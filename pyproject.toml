@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "moodle-docs-theme"
-version = "0.2.1"
+version = "0.3.0"
 description = "Um tema Sphinx reutilizável inspirado visualmente na documentação oficial do Moodle (docs.moodle.org)"
 readme = "README.md"
 authors = [

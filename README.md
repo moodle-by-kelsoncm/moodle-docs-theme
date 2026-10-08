@@ -20,6 +20,7 @@ da sua organização.
 - **Design inspirado no MoodleDocs**: cabeçalho claro com faixa de destaque laranja
   (`#f98012`), títulos em roxo (`#6c336d`), links em azul (`#3366cc`) — a mesma
   linguagem visual do docs.moodle.org.
+- **Internacionalização bilíngue**: suporte nativo aos idiomas Inglês (`en`, default) e Português do Brasil (`pt-br`), com seletor de bandeiras (EUA e Brasil) no cabeçalho e roteador inteligente `index.html` na raiz.
 - **Modo escuro**: alternância de tema claro/escuro com detecção de preferência do
   sistema e persistência em `localStorage`.
 - **Customização simples**: cores, logotipo, fontes e links de navegação configuráveis

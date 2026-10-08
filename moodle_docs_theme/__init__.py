@@ -5,7 +5,7 @@ moodle_docs_theme - A reusable Sphinx HTML theme inspired by docs.moodle.org (Mo
 import os
 from typing import Dict, Any
 
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 
 
 def get_html_theme_path() -> str:

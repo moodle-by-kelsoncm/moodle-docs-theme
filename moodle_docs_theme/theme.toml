@@ -28,4 +28,5 @@ doc_path = "docs/"
 navigation_links = ""
 show_edit_on_github = true
 enable_dark_mode = true
+enable_language_selector = true
 footer_custom_text = ""

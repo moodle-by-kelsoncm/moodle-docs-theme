@@ -149,6 +149,56 @@ img {
   font-size: 0.85rem;
 }
 
+/* Language Selector (Bandeiras Bilíngues) */
+.moodle-lang-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--moodle-search-btn-bg);
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid var(--moodle-border);
+}
+
+.moodle-lang-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+  opacity: 0.55;
+  border: 1px solid transparent;
+}
+
+.moodle-lang-btn:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.moodle-lang-btn.active {
+  opacity: 1;
+  background: var(--moodle-accent-soft);
+  border-color: var(--moodle-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.moodle-flag-icon {
+  display: block;
+  width: 22px;
+  height: 15px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.moodle-lang-divider {
+  color: var(--moodle-border);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
 /* Theme Toggle Button */
 .theme-toggle-btn {
   background: var(--moodle-search-btn-bg);
