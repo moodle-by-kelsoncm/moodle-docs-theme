@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="moodle-docs-theme",
-    version="0.2.0",
+    version="0.2.1",
     author="KelsonCM",
     author_email="kelsoncm@gmail.com",
     description="Um tema Sphinx reutilizável inspirado visualmente na documentação oficial do Moodle (docs.moodle.org)",

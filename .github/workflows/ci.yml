@@ -5,6 +5,9 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  release:
+    types: [ published ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -46,8 +49,15 @@ jobs:
         run: |
           python -m build
 
+      - name: Upload Dist Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+          retention-days: 1
+
       - name: Upload Pages Artifact
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         continue-on-error: true
         with:
@@ -55,7 +65,7 @@ jobs:
 
   deploy-docs:
     name: Deploy Docs to GitHub Pages
-    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && (github.event_name == 'push' || github.event_name == 'release')
     needs: build
     runs-on: ubuntu-latest
     environment:
@@ -66,3 +76,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  pypi-publish:
+    name: Publish Package to PyPI
+    if: github.event_name == 'release' && github.event.action == 'published'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download distribution artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish Package to PyPI via Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@v1.12.4
+        with:
+          packages-dir: dist/

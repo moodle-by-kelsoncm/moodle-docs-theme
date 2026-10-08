@@ -131,8 +131,7 @@ python build_docs.py
 moodle-docs-theme/
 ├── .github/
 │   └── workflows/
-│       ├── ci.yml             # Integração contínua e deploy no GitHub Pages
-│       └── publish-pypi.yml   # Deploy automático no PyPI via Trusted Publishing
+│       └── ci.yml             # Integração contínua, docs (Pages) e publicação (PyPI)
 ├── docs/                      # Documentação oficial do tema
 │   ├── conf.py
 │   ├── index.rst
