@@ -77,6 +77,47 @@
 
       {# Right-side tools: Header Search & Dark Mode Toggle #}
       <div class="moodle-header-tools">
+        {# Seletor de Idioma Bilíngue (Bandeiras EUA e Brasil) #}
+        {% if theme_enable_language_selector is not defined or theme_enable_language_selector|tobool %}
+        <div class="moodle-lang-selector" aria-label="Seletor de idioma / Language selector">
+          {% set current_l = language if language else 'en' %}
+          {% set is_en = current_l.lower().startswith('en') %}
+          {% set page_slug = pagename.split('/')[-1] %}
+          <a href="{% if is_en %}#{% else %}../en/{{ page_slug }}.html{% endif %}"
+             class="moodle-lang-btn {% if is_en %}active{% endif %}"
+             data-lang="en"
+             title="English"
+             aria-label="English">
+            <svg class="moodle-flag-icon" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true">
+              <rect width="24" height="16" fill="#b22234" rx="2" />
+              <path d="M0 2.46h24M0 4.92h24M0 7.38h24M0 9.84h24M0 12.3h24M0 14.76h24" stroke="#fff" stroke-width="1.23" />
+              <rect width="10" height="8.62" fill="#3c3b6e" rx="1" />
+              <circle cx="2.5" cy="2.15" r="0.6" fill="#fff" />
+              <circle cx="5.0" cy="2.15" r="0.6" fill="#fff" />
+              <circle cx="7.5" cy="2.15" r="0.6" fill="#fff" />
+              <circle cx="3.75" cy="4.31" r="0.6" fill="#fff" />
+              <circle cx="6.25" cy="4.31" r="0.6" fill="#fff" />
+              <circle cx="2.5" cy="6.46" r="0.6" fill="#fff" />
+              <circle cx="5.0" cy="6.46" r="0.6" fill="#fff" />
+              <circle cx="7.5" cy="6.46" r="0.6" fill="#fff" />
+            </svg>
+          </a>
+          <span class="moodle-lang-divider">|</span>
+          <a href="{% if not is_en %}#{% else %}../pt-br/{{ page_slug }}.html{% endif %}"
+             class="moodle-lang-btn {% if not is_en %}active{% endif %}"
+             data-lang="pt-br"
+             title="Português (Brasil)"
+             aria-label="Português (Brasil)">
+            <svg class="moodle-flag-icon" viewBox="0 0 24 16" width="22" height="15" aria-hidden="true">
+              <rect width="24" height="16" fill="#009b3a" rx="2" />
+              <path d="M12 2.2L21.5 8 12 13.8 2.5 8z" fill="#fedf00" />
+              <circle cx="12" cy="8" r="3.4" fill="#002776" />
+              <path d="M8.8 8.4a3.4 3.4 0 0 1 6.2-.8" stroke="#fff" stroke-width="0.7" fill="none" />
+            </svg>
+          </a>
+        </div>
+        {% endif %}
+
         <form action="{{ pathto('search') }}" method="get" class="moodle-header-search">
           <input type="text" name="q" placeholder="Buscar..." aria-label="Buscar na documentação" required />
           <input type="hidden" name="check_keywords" value="yes" />

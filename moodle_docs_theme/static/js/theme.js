@@ -18,6 +18,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initDarkMode();
+  initLanguageSelector();
   initMobileMenu();
   initCopyCodeButtons();
   initExternalLinks();
@@ -127,5 +128,25 @@ function initExternalLinks() {
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener noreferrer');
     }
+  });
+}
+
+/**
+ * Initialize Language Selector behavior (persist preference)
+ */
+function initLanguageSelector() {
+  const langBtns = document.querySelectorAll('.moodle-lang-btn');
+  langBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const targetLang = btn.getAttribute('data-lang');
+      if (targetLang) {
+        try {
+          localStorage.setItem('user_lang', targetLang);
+        } catch (err) {}
+      }
+      if (btn.classList.contains('active') || btn.getAttribute('href') === '#') {
+        e.preventDefault();
+      }
+    });
   });
 }

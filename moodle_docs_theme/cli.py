@@ -66,12 +66,18 @@ def cmd_init(args: argparse.Namespace) -> int:
     plugin_path = args.plugin_path or inferred_path
     plugin_dir_name = args.plugin_dir_name or inferred_dir
 
+    tagline_en = getattr(args, "tagline_en", None) or f"Official documentation for {project_name}"
+    tagline_pt = getattr(args, "tagline_pt", None) or tagline or f"Documentação oficial de {project_name}"
+
     context: dict[str, str] = {
         "project_name": project_name,
+        "project_underline": "=" * max(len(project_name), 10),
         "repo_name": repo_name,
         "github_url": github_url,
         "github_repo": repo_name,
         "tagline": tagline,
+        "tagline_en": tagline_en,
+        "tagline_pt": tagline_pt,
         "version": version,
         "year": year,
         "plugin_path": plugin_path,
@@ -84,39 +90,89 @@ def cmd_init(args: argparse.Namespace) -> int:
 
     target_docs_dir.mkdir(parents=True, exist_ok=True)
 
-    files_to_render = [
-        ("conf.py.tpl", "conf.py"),
-        ("index.md.tpl", "index.md"),
-        ("installation.md.tpl", "installation.md"),
-        ("configuration.md.tpl", "configuration.md"),
-        ("usage.md.tpl", "usage.md"),
-    ]
-
+    created_files: list[str] = []
     print(f"-> Inicializando template de documentação em: {target_path}")
 
-    created_files: list[str] = []
-    for src_name, dst_name in files_to_render:
-        src_file = template_docs_dir / src_name
-        dst_file = target_docs_dir / dst_name
+    single_lang = getattr(args, "single_lang", False)
 
-        if dst_file.exists() and not args.force:
-            print(f"   [IGNORADO] Arquivo já existe: {dst_file.relative_to(target_path)} (use --force para sobrescrever)")
-            continue
+    if single_lang:
+        # Modo legado (monolíngue) na raiz de docs/
+        files_to_render = [
+            ("conf.py.tpl", "conf.py"),
+            ("index.md.tpl", "index.md"),
+            ("installation.md.tpl", "installation.md"),
+            ("configuration.md.tpl", "configuration.md"),
+            ("usage.md.tpl", "usage.md"),
+        ]
+        for src_name, dst_name in files_to_render:
+            src_file = template_docs_dir / src_name
+            dst_file = target_docs_dir / dst_name
 
-        rendered = _render_template(src_file, context)
-        dst_file.write_text(rendered, encoding="utf-8")
-        created_files.append(str(dst_file.relative_to(target_path)))
-        print(f"   [CRIADO]   {dst_file.relative_to(target_path)}")
+            if dst_file.exists() and not args.force:
+                print(f"   [IGNORADO] Arquivo já existe: {dst_file.relative_to(target_path)} (use --force para sobrescrever)")
+                continue
+
+            rendered = _render_template(src_file, context)
+            dst_file.write_text(rendered, encoding="utf-8")
+            created_files.append(str(dst_file.relative_to(target_path)))
+            print(f"   [CRIADO]   {dst_file.relative_to(target_path)}")
+    else:
+        # Modo bilíngue padrão: docs/en e docs/pt-br com index.html na raiz
+        idx_src = template_docs_dir / "index.html"
+        idx_dst = target_docs_dir / "index.html"
+        if idx_src.exists():
+            if not idx_dst.exists() or args.force:
+                shutil.copy2(idx_src, idx_dst)
+                created_files.append(str(idx_dst.relative_to(target_path)))
+                print(f"   [CRIADO]   {idx_dst.relative_to(target_path)}")
+            else:
+                print(f"   [IGNORADO] Arquivo já existe: {idx_dst.relative_to(target_path)}")
+
+        bilingual_specs = [
+            ("en", [
+                ("conf.py.tpl", "conf.py"),
+                ("index.rst.tpl", "index.rst"),
+                ("installation.rst.tpl", "installation.rst"),
+                ("configuration.rst.tpl", "configuration.rst"),
+                ("usage.rst.tpl", "usage.rst"),
+            ]),
+            ("pt-br", [
+                ("conf.py.tpl", "conf.py"),
+                ("index.rst.tpl", "index.rst"),
+                ("installation.rst.tpl", "installation.rst"),
+                ("configuration.rst.tpl", "configuration.rst"),
+                ("usage.rst.tpl", "usage.rst"),
+            ]),
+        ]
+
+        for lang_folder, files in bilingual_specs:
+            lang_dir = target_docs_dir / lang_folder
+            lang_dir.mkdir(parents=True, exist_ok=True)
+            tpl_lang_dir = template_docs_dir / lang_folder
+
+            for src_name, dst_name in files:
+                src_file = tpl_lang_dir / src_name
+                dst_file = lang_dir / dst_name
+
+                if dst_file.exists() and not args.force:
+                    print(f"   [IGNORADO] Arquivo já existe: {dst_file.relative_to(target_path)} (use --force para sobrescrever)")
+                    continue
+
+                rendered = _render_template(src_file, context)
+                dst_file.write_text(rendered, encoding="utf-8")
+                created_files.append(str(dst_file.relative_to(target_path)))
+                print(f"   [CRIADO]   {dst_file.relative_to(target_path)}")
 
     # requirements.txt
     req_src = template_docs_dir / "requirements.txt"
     req_dst = target_docs_dir / "requirements.txt"
-    if not req_dst.exists() or args.force:
-        shutil.copy2(req_src, req_dst)
-        created_files.append(str(req_dst.relative_to(target_path)))
-        print(f"   [CRIADO]   {req_dst.relative_to(target_path)}")
-    else:
-        print(f"   [IGNORADO] Arquivo já existe: {req_dst.relative_to(target_path)}")
+    if req_src.exists():
+        if not req_dst.exists() or args.force:
+            shutil.copy2(req_src, req_dst)
+            created_files.append(str(req_dst.relative_to(target_path)))
+            print(f"   [CRIADO]   {req_dst.relative_to(target_path)}")
+        else:
+            print(f"   [IGNORADO] Arquivo já existe: {req_dst.relative_to(target_path)}")
 
     # Workflow do GitHub Actions
     if not args.no_workflow:
@@ -139,7 +195,7 @@ def cmd_init(args: argparse.Namespace) -> int:
 
 def cmd_build(args: argparse.Namespace) -> int:
     """
-    Compila a documentação usando Sphinx e moodle-docs-theme.
+    Compila a documentação usando Sphinx e moodle-docs-theme (suporta bilíngue en e pt-br).
     """
     docs_dir = Path(args.docs_dir).resolve()
     output_dir = Path(args.output_dir).resolve()
@@ -148,16 +204,51 @@ def cmd_build(args: argparse.Namespace) -> int:
         print(f"Erro: Diretório de documentação não encontrado: '{docs_dir}'", file=sys.stderr)
         return 1
 
-    conf_file = docs_dir / "conf.py"
-    if not conf_file.exists():
-        print(f"Erro: Arquivo 'conf.py' não encontrado em: '{docs_dir}'", file=sys.stderr)
-        return 1
-
     if args.clean and output_dir.exists():
         print(f"-> Limpando diretório de saída: '{output_dir}'")
         shutil.rmtree(output_dir)
 
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    en_dir = docs_dir / "en"
+    pt_dir = docs_dir / "pt-br"
+
+    if en_dir.exists() and (en_dir / "conf.py").exists() and pt_dir.exists() and (pt_dir / "conf.py").exists():
+        print(f"-> Detectada documentação bilíngue em '{docs_dir}' (en e pt-br)")
+        # Compila EN
+        en_out = output_dir / "en"
+        en_out.mkdir(parents=True, exist_ok=True)
+        cmd_en = [sys.executable, "-m", "sphinx", "-b", args.builder]
+        if args.warnings_as_errors:
+            cmd_en.append("-W")
+        cmd_en.extend([str(en_dir), str(en_out)])
+        res_en = subprocess.run(cmd_en, check=False)
+        if res_en.returncode != 0:
+            return res_en.returncode
+
+        # Compila PT-BR
+        pt_out = output_dir / "pt-br"
+        pt_out.mkdir(parents=True, exist_ok=True)
+        cmd_pt = [sys.executable, "-m", "sphinx", "-b", args.builder]
+        if args.warnings_as_errors:
+            cmd_pt.append("-W")
+        cmd_pt.extend([str(pt_dir), str(pt_out)])
+        res_pt = subprocess.run(cmd_pt, check=False)
+        if res_pt.returncode != 0:
+            return res_pt.returncode
+
+        # Copia roteador index.html se existir
+        index_html = docs_dir / "index.html"
+        if index_html.exists():
+            shutil.copy2(index_html, output_dir / "index.html")
+
+        print(f"\nDocumentação bilíngue gerada com sucesso em: {output_dir}")
+        return 0
+
+    conf_file = docs_dir / "conf.py"
+    if not conf_file.exists():
+        print(f"Erro: Arquivo 'conf.py' não encontrado em: '{docs_dir}'", file=sys.stderr)
+        return 1
 
     sphinx_cmd = [
         sys.executable,
@@ -243,6 +334,19 @@ def build_parser() -> argparse.ArgumentParser:
         "--force",
         action="store_true",
         help="Sobrescreve arquivos existentes caso já estejam presentes.",
+    )
+    init_parser.add_argument(
+        "--single-lang",
+        action="store_true",
+        help="Gera template em idioma único na raiz de docs/ (modo legado). Por padrão, gera estrutura bilíngue (en e pt-br).",
+    )
+    init_parser.add_argument(
+        "--tagline-en",
+        help="Tagline em inglês para a documentação.",
+    )
+    init_parser.add_argument(
+        "--tagline-pt",
+        help="Tagline em português para a documentação.",
     )
     init_parser.add_argument(
         "--no-workflow",

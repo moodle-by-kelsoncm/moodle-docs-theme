@@ -50,19 +50,47 @@ class TestMoodleDocsThemeCLI(unittest.TestCase):
         self.assertEqual(exit_code, 0)
 
         docs_dir = target_dir / "docs"
-        self.assertTrue((docs_dir / "conf.py").exists())
-        self.assertTrue((docs_dir / "index.md").exists())
-        self.assertTrue((docs_dir / "installation.md").exists())
-        self.assertTrue((docs_dir / "configuration.md").exists())
-        self.assertTrue((docs_dir / "usage.md").exists())
+        self.assertTrue((docs_dir / "index.html").exists())
         self.assertTrue((docs_dir / "requirements.txt").exists())
         self.assertTrue((target_dir / ".github" / "workflows" / "docs.yml").exists())
 
+        # Verifica pasta en
+        en_dir = docs_dir / "en"
+        self.assertTrue((en_dir / "conf.py").exists())
+        self.assertTrue((en_dir / "index.rst").exists())
+        self.assertTrue((en_dir / "installation.rst").exists())
+        self.assertTrue((en_dir / "configuration.rst").exists())
+        self.assertTrue((en_dir / "usage.rst").exists())
+
+        # Verifica pasta pt-br
+        pt_dir = docs_dir / "pt-br"
+        self.assertTrue((pt_dir / "conf.py").exists())
+        self.assertTrue((pt_dir / "index.rst").exists())
+        self.assertTrue((pt_dir / "installation.rst").exists())
+        self.assertTrue((pt_dir / "configuration.rst").exists())
+        self.assertTrue((pt_dir / "usage.rst").exists())
+
         # Verifica conteúdo renderizado
-        conf_content = (docs_dir / "conf.py").read_text(encoding="utf-8")
-        self.assertIn('project = "tool_sample"', conf_content)
-        self.assertIn('"github_repo": "moodle-by-kelsoncm/tool_sample"', conf_content)
-        self.assertIn('"moodle_docs_theme"', conf_content)
+        conf_en = (en_dir / "conf.py").read_text(encoding="utf-8")
+        self.assertIn('project = "tool_sample"', conf_en)
+        self.assertIn('"github_repo": "moodle-by-kelsoncm/tool_sample"', conf_en)
+        self.assertIn('language = "en"', conf_en)
+
+        conf_pt = (pt_dir / "conf.py").read_text(encoding="utf-8")
+        self.assertIn('project = "tool_sample"', conf_pt)
+        self.assertIn('language = "pt_BR"', conf_pt)
+
+    def test_cli_init_single_lang(self):
+        target_dir = Path(self.test_dir) / "tool_single"
+        target_dir.mkdir()
+
+        exit_code = main(["init", str(target_dir), "--single-lang"])
+        self.assertEqual(exit_code, 0)
+
+        docs_dir = target_dir / "docs"
+        self.assertTrue((docs_dir / "conf.py").exists())
+        self.assertTrue((docs_dir / "index.md").exists())
+        self.assertTrue((docs_dir / "requirements.txt").exists())
 
     def test_cli_init_custom_options(self):
         target_dir = Path(self.test_dir) / "atto_custom"
@@ -74,16 +102,21 @@ class TestMoodleDocsThemeCLI(unittest.TestCase):
             "--project-name", "moodle-atto_custom",
             "--repo", "moodle-by-kelsoncm/atto_custom",
             "--tagline", "Custom Atto plugin description",
+            "--tagline-en", "English description",
+            "--tagline-pt", "Descrição em português",
             "--version-str", "2.1.0",
             "--no-workflow",
         ])
         self.assertEqual(exit_code, 0)
 
         docs_dir = target_dir / "docs"
-        conf_content = (docs_dir / "conf.py").read_text(encoding="utf-8")
-        self.assertIn('project = "moodle-atto_custom"', conf_content)
-        self.assertIn('release = "2.1.0"', conf_content)
-        self.assertIn('Custom Atto plugin description', conf_content)
+        conf_en = (docs_dir / "en" / "conf.py").read_text(encoding="utf-8")
+        self.assertIn('project = "moodle-atto_custom"', conf_en)
+        self.assertIn('release = "2.1.0"', conf_en)
+        self.assertIn('English description', conf_en)
+
+        conf_pt = (docs_dir / "pt-br" / "conf.py").read_text(encoding="utf-8")
+        self.assertIn('Descrição em português', conf_pt)
 
         # Sem workflow
         self.assertFalse((target_dir / ".github" / "workflows" / "docs.yml").exists())
@@ -92,18 +125,19 @@ class TestMoodleDocsThemeCLI(unittest.TestCase):
         target_dir = Path(self.test_dir) / "existing_repo"
         target_dir.mkdir()
         docs_dir = target_dir / "docs"
-        docs_dir.mkdir()
-        (docs_dir / "conf.py").write_text("existing content", encoding="utf-8")
+        en_dir = docs_dir / "en"
+        en_dir.mkdir(parents=True)
+        (en_dir / "conf.py").write_text("existing content", encoding="utf-8")
 
         exit_code = main(["init", str(target_dir)])
         self.assertEqual(exit_code, 0)
 
-        self.assertEqual((docs_dir / "conf.py").read_text(encoding="utf-8"), "existing content")
+        self.assertEqual((en_dir / "conf.py").read_text(encoding="utf-8"), "existing content")
 
         # Com --force deve sobrescrever
         exit_code = main(["init", str(target_dir), "--force"])
         self.assertEqual(exit_code, 0)
-        self.assertIn("moodle_docs_theme", (docs_dir / "conf.py").read_text(encoding="utf-8"))
+        self.assertIn("moodle_docs_theme", (en_dir / "conf.py").read_text(encoding="utf-8"))
 
     def test_cli_build_nonexistent_directory(self):
         nonexistent = str(Path(self.test_dir) / "nao_existe")

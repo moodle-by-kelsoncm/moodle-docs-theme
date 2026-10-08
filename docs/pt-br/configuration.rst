@@ -64,6 +64,9 @@ Opções disponíveis
    * - ``enable_dark_mode``
      - ``True``
      - Habilita o botão de alternância para o Modo Escuro.
+   * - ``enable_language_selector``
+     - ``True``
+     - Habilita o seletor com as bandeiras dos EUA e do Brasil no cabeçalho.
    * - ``navigation_links``
      - ``""``
      - Links no formato ``"Título|url, Título2|url2"``.
