@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="moodle-docs-theme",
-    version="0.3.0",
+    version="0.4.0",
     author="KelsonCM",
     author_email="kelsoncm@gmail.com",
     description="Um tema Sphinx reutilizável inspirado visualmente na documentação oficial do Moodle (docs.moodle.org)",
@@ -47,14 +47,14 @@ setup(
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: Documentation",
         "Topic :: Documentation :: Sphinx",
         "Topic :: Software Development :: Documentation",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.10",
 )

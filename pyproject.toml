@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "moodle-docs-theme"
-version = "0.3.0"
+version = "0.4.0"
 description = "Um tema Sphinx reutilizável inspirado visualmente na documentação oficial do Moodle (docs.moodle.org)"
 readme = "README.md"
 authors = [
     { name = "KelsonCM", email = "kelsoncm@gmail.com" }
 ]
 license = "BSD-3-Clause"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 dependencies = [
     "sphinx>=4.0",
     "myst-parser>=2.0"
@@ -22,11 +22,11 @@ classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Documentation",
     "Topic :: Documentation :: Sphinx",
     "Topic :: Software Development :: Documentation"

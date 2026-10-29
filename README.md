@@ -8,7 +8,7 @@ mantidos por organizações no GitHub. Mantém a mesma identidade visual — cab
 com faixa de destaque laranja, títulos em roxo, links em azul — em toda a documentação
 da sua organização.
 
-![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Sphinx](https://img.shields.io/badge/sphinx-4.0%2B-green)
 ![CI & Docs](https://github.com/moodle-by-kelsoncm/moodle-docs-theme/actions/workflows/publish-pypi.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-blue)
