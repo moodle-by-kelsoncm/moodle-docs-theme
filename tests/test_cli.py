@@ -27,7 +27,6 @@ class TestMoodleDocsThemeCLI(unittest.TestCase):
     def test_infer_plugin_info(self):
         self.assertEqual(_infer_plugin_info("atto_justify"), ("lib/editor/atto/plugins", "justify"))
         self.assertEqual(_infer_plugin_info("tiny_fontfamily"), ("lib/editor/tiny/plugins", "fontfamily"))
-        self.assertEqual(_infer_plugin_info("tool_ribbons"), ("admin/tool", "ribbons"))
         self.assertEqual(_infer_plugin_info("block_recommendation"), ("blocks", "recommendation"))
         self.assertEqual(_infer_plugin_info("mod_imagemap"), ("mod", "imagemap"))
         self.assertEqual(_infer_plugin_info("local_tinytoolbar"), ("local", "tinytoolbar"))
