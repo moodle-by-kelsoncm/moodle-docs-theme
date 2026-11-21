@@ -59,6 +59,17 @@ function updateToggleBtnIcon(iconSymbol) {
   if (btnIcon) {
     btnIcon.textContent = iconSymbol;
   }
+
+  // O rótulo nomeia a ação que o botão executa: no tema escuro oferece o claro, e vice-versa.
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const label = btn.getAttribute(isDark ? 'data-label-to-light' : 'data-label-to-dark');
+    if (label) { // sem o atributo (HTML antigo em cache), mantém o rótulo atual
+      btn.setAttribute('aria-label', label);
+      btn.setAttribute('title', label);
+    }
+  }
 }
 
 /**
