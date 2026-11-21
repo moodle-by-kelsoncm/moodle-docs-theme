@@ -24,7 +24,7 @@ def build_header(extra_conf: str) -> str:
         with open(os.path.join(src, "conf.py"), "w", encoding="utf-8") as f:
             f.write(
                 'project = "Projeto Teste"\n'
-                'extensions = ["moodle_docs_theme"]\n'
+                'extensions = ["sphinx.ext.githubpages", "moodle_docs_theme"]\n'
                 'html_theme = "moodle_docs_theme"\n'
                 f"html_theme_path = [{moodle_docs_theme.get_html_theme_path()!r}]\n"
                 + extra_conf
