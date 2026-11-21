@@ -46,6 +46,9 @@ Available options
    * - ``logo_height``
      - ``32px``
      - Logo display height in header.
+   * - ``logo_only``
+     - ``False``
+     - Show only the logo, hiding the project name (kept for screen readers). Use it when the logo already contains the name. By default the logo and the name appear side by side.
    * - ``github_url``
      - ``""``
      - Full URL to GitHub repository.

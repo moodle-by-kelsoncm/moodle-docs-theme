@@ -46,6 +46,9 @@ Opções disponíveis
    * - ``logo_height``
      - ``32px``
      - Altura do logotipo no cabeçalho.
+   * - ``logo_only``
+     - ``False``
+     - Mostra só o logotipo e oculta o nome do projeto (mantido para leitores de tela). Use quando o logotipo já contém o nome. Por padrão, logotipo e nome aparecem lado a lado.
    * - ``github_url``
      - ``""``
      - URL completa do repositório no GitHub.
