@@ -59,15 +59,20 @@
       <div class="moodle-brand-group">
         <a href="{{ pathto(master_doc) }}" class="moodle-brand">
           {% if theme_logo %}
-            <img src="{{ pathto('_static/' ~ theme_logo, 1) }}" alt="{{ project }}" class="moodle-brand-logo" style="{% if theme_logo_height %}height: {{ theme_logo_height }};{% endif %}" />
+            <img src="{{ pathto('_static/' ~ theme_logo, 1) }}" alt="" class="moodle-brand-logo" style="{% if theme_logo_height %}height: {{ theme_logo_height }};{% endif %}" />
           {% elif logo_url %}
-            <img src="{{ logo_url }}" alt="{{ project }}" class="moodle-brand-logo" />
+            <img src="{{ logo_url }}" alt="" class="moodle-brand-logo" style="{% if theme_logo_height %}height: {{ theme_logo_height }};{% endif %}" />
           {% elif logo %}
-            <img src="{{ pathto('_static/' ~ logo, 1) }}" alt="{{ project }}" class="moodle-brand-logo" />
-          {% else %}
+            <img src="{{ pathto('_static/' ~ logo, 1) }}" alt="" class="moodle-brand-logo" style="{% if theme_logo_height %}height: {{ theme_logo_height }};{% endif %}" />
+          {% endif %}
+          {% set _has_logo = theme_logo or logo_url or logo %}
+          {% set _logo_only = theme_logo_only and theme_logo_only|string|lower not in ('false', '0', 'no', '') %}
+          {% if not (_has_logo and _logo_only) %}
             <span class="moodle-brand-title">
               {% if theme_project_name %}{{ theme_project_name }}{% else %}{{ project }}{% endif %}
             </span>
+          {% elif _has_logo %}
+            <span class="visually-hidden">{% if theme_project_name %}{{ theme_project_name }}{% else %}{{ project }}{% endif %}</span>
           {% endif %}
         </a>
         <span class="moodle-tagline">

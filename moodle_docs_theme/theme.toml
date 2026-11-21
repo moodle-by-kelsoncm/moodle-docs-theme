@@ -19,6 +19,7 @@ sidebar_bg = "#fafafa"
 nav_text_color = "#355a83"
 logo = ""
 logo_height = "32px"
+logo_only = false
 project_name = ""
 tagline = "Documentação inspirada no MoodleDocs"
 github_url = ""
