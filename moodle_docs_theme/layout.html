@@ -131,8 +131,14 @@
         </form>
 
         {% if theme_enable_dark_mode|tobool %}
-          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar modo claro/escuro" title="Alternar modo claro/escuro">
-            <span id="theme-toggle-icon">🌙</span>
+          {#- O botão nomeia a ação que executa; o theme.js troca ícone e rótulo conforme o tema ativo. #}
+          {%- if (language or 'pt').startswith('pt') %}
+            {%- set _to_light, _to_dark = 'Modo claro', 'Modo escuro' %}
+          {%- else %}
+            {%- set _to_light, _to_dark = 'Light mode', 'Dark mode' %}
+          {%- endif %}
+          <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="{{ _to_dark }}" title="{{ _to_dark }}" data-label-to-light="{{ _to_light }}" data-label-to-dark="{{ _to_dark }}">
+            <span id="theme-toggle-icon" aria-hidden="true">🌙</span>
           </button>
         {% endif %}
       </div>
